@@ -1,0 +1,12 @@
+{
+  "name": "app-gym-manager",
+  "packageManager": "yarn@4.10.3",
+  "private": true,
+  "workspaces": [
+    "domain",
+    "apps/*"
+  ],
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
