@@ -1,2 +1,2 @@
-import {  } from '@gym-manager/domain'
-console.log(r)
+import { Person } from '@gym-manager/domain'
+console.log("")
