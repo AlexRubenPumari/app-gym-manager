@@ -1,4 +1,5 @@
-import { Member } from "domain/src/entities" 
+import { Member } from "domain/src/entities"
+import { NewEntity } from "domain/src/utils" 
 
 const dataMember: Member[] = [
   {
@@ -24,5 +25,13 @@ const dataMember: Member[] = [
 export const memberService = {
   getById: async (id: number) => {
     return dataMember.find(member => member.id === id)
+  },
+  register: async (newMember: NewEntity<Member>) => {
+    if (!newMember) return new Error()
+
+    return {
+      id: 1,
+      ...newMember
+    } as Member
   }
 }

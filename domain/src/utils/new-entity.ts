@@ -1,0 +1,1 @@
+export type NewEntity<T extends { id: number }> = Omit<T, 'id'>;
