@@ -2,7 +2,7 @@ import { describe, test, expect } from "vitest"
 import { getMember } from "./get-member"
 import { memberService } from "../services/mocks"
 
-describe("get-client", () => {
+describe("get-member", () => {
   test("Debe retornar un Cliente si pasamos un id válido", async () => {
 
     const member = await getMember({ memberService }, { id: 1 })

@@ -18,7 +18,7 @@ describe("register-member", () => {
     })
   })
 
-  test("Debe retornar un Error si no pasamos un Member", async () => {
+  test("Debe retornar un Error si los datos son inválidos", async () => {
     const error = await registerMember({ memberService })
 
     expect(error).toBeInstanceOf(Error)

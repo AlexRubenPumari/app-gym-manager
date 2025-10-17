@@ -33,5 +33,14 @@ export const memberService = {
       id: 1,
       ...newMember
     } as Member
+  },
+  update: async (id: number, updateData: Partial<NewEntity<Member>>) => {
+    if (!updateData) return new Error()
+
+    const member = dataMember.find(member => member.id === id)
+
+    if (!member) return new Error()
+
+    return { ...member, ...updateData } as Member
   }
 }
