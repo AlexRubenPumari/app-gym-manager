@@ -5,13 +5,12 @@ interface GetMemberDeps {
 }
 
 interface GetMemberPayload {
-  id: number,
+  memberId: number,
 }
 
 export async function getMember (dependencies: GetMemberDeps, payload: GetMemberPayload) {
-  const member = await dependencies.memberService.getById(payload.id)
-
-  if (!member) return new Error()
+  const member = await dependencies.memberService.getById(payload.memberId)
+  if (!member) return new Error("Member not found")
 
   return member
 }
