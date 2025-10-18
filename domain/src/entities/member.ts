@@ -1,5 +1,6 @@
+import { ExpirationDate } from "./expiration-date"
 import { Person } from "./person"
 
 export interface Member extends Person {
-  role: 'member'
+  subscriptionExpiresAt: ExpirationDate
 }
