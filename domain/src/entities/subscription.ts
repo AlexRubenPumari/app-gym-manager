@@ -1,9 +1,11 @@
-import { AccessPlan } from "./subscription-access-plan"
+import { DateValue } from "./date-value"
+
+type SubscriptionStatus = 'active' | 'expired'
 
 export interface Subscription {
-  id: string;
-  memberId: string;
-  startDate: Date;
-  durationDays: number;
-  accessPlan: AccessPlan;
+  id: number
+  startDate: DateValue
+  endDate: DateValue
+  status: SubscriptionStatus
+  memberId: number
 }
