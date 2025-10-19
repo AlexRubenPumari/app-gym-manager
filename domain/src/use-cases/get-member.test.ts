@@ -5,12 +5,26 @@ import { memberService } from "../services/mocks"
 describe("get-member", () => {
   test("should return a member when a valid id is provided", async () => {
 
-    const member = await getMember({ memberService }, { memberId: 1 })
-    expect(member).toStrictEqual({
+    const activeMember = await getMember({ memberService }, { memberId: 1 })
+    expect(activeMember).toStrictEqual({
       id: 1,
-      name: 'alex',
-      phone: '1128280122',
-      role: 'member'
+      dni: "12345678A",
+      firstName: "Juan",
+      lastName: "Pérez",
+      phone: "600123456",
+      registrationDate: new Date("2023-01-15"),
+      isActive: true
+    })
+
+    const inactiveMember = await getMember({ memberService }, { memberId: 3 })
+    expect(inactiveMember).toStrictEqual({
+      id: 3,
+      dni: "11223344C",
+      firstName: "Luis",
+      lastName: "Martínez",
+      phone: "600987654",
+      registrationDate: new Date("2024-03-22"),
+      isActive: false
     })
   })
 

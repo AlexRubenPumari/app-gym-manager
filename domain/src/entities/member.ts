@@ -1,6 +1,7 @@
-import { ExpirationDate } from "./expiration-date"
+import { DateValue } from "./date-value"
 import { Person } from "./person"
 
 export interface Member extends Person {
-  subscriptionExpiresAt: ExpirationDate
+  registrationDate: DateValue
+  isActive: boolean
 }
