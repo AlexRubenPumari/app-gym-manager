@@ -1,1 +1,3 @@
-export type NewEntity<T extends { id: number }> = Omit<T, 'id'>;
+import { Entity } from "./entity"
+
+export type NewEntity<T extends Entity> = Omit<T, 'id'>;
