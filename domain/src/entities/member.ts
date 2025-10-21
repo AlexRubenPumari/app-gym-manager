@@ -1,7 +1,6 @@
-import { DateValue } from "./date-value"
-import { Person } from "./person"
+import { DateValue, Person, Entity } from "../utils"
 
-export interface Member extends Person {
+export interface Member extends Entity, Person {
   registrationDate: DateValue
   isActive: boolean
 }

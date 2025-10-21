@@ -1,4 +1,4 @@
-import { DateValue } from "./date-value"
+import { DateValue } from "../utils"
 
 type SubscriptionStatus = 'active' | 'expired'
 

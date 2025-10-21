@@ -1,7 +1,6 @@
-import { Person } from "./person"
+import { Entity, Person, User } from "../utils"
 import { StaffRol } from "./staff-rol"
-import { User } from "./user"
 
-export interface StaffMember extends Person, User {
+export interface StaffMember extends Entity, Person, User {
   role: StaffRol
 }
