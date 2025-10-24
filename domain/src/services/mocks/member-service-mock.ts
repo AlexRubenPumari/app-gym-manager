@@ -2,8 +2,9 @@ import { Member } from "domain/src/entities"
 import { NewEntity } from "domain/src/utils"
 import { subscriptions } from "./data/subscriptions"
 import { members } from "./data/members"
+import { MemberService } from "../member-service"
 
-export const memberService = {
+export const memberService: MemberService = {
   getById: async (id: number) => {
     const foundedMember = members.find(member => member.id === id)
     if (!foundedMember) return null
@@ -12,17 +13,20 @@ export const memberService = {
       subscription => {
         if (subscription.memberId !== id) return false
 
-        const endDate = new Date(subscription.endDate)
-        const todayDate = new Date()
+        const today = new Date()
+        const end = subscription.endDate
 
-        endDate.setHours(0, 0, 0, 0)
-        todayDate.setHours(0, 0, 0, 0)
-
-        return endDate >= todayDate
+        return (
+          today.getFullYear() < end.getFullYear() ||
+          (today.getFullYear() === end.getFullYear() && (
+            today.getMonth() < end.getMonth() ||
+            (today.getMonth() === end.getMonth() && today.getDate() <= end.getDate())
+          ))
+        )
       }
     )
 
-    return { ...foundedMember, status: isActiveMember ? 'active' : 'banned' as const }
+    return { ...foundedMember, status: isActiveMember ? 'active' : 'inactive' }
   },
   create: async (newMember: NewEntity<Member>) => {
     if (!newMember) return new Error()

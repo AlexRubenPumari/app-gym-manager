@@ -1,5 +1,5 @@
 export interface Person {
-  dni: string 
+  nationalId: string 
   firstName: string
   lastName: string
   phone?: string
