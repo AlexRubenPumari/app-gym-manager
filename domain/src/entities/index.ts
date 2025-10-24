@@ -1,6 +1,7 @@
 export * from "./staff-member"
 export * from "./staff-rol"
 export * from "./member"
+export * from "./member-status"
 export * from "./payment"
 export * from "./payment-method"
 export * from "./payment-status"
