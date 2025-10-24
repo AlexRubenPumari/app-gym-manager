@@ -26,15 +26,43 @@ export const memberService: MemberService = {
       }
     )
 
-    return { ...foundedMember, status: isActiveMember ? 'active' : 'inactive' }
+    return {
+      ...foundedMember,
+      status: isActiveMember ? 'active' : 'inactive'
+    }
   },
-  create: async (newMember: NewEntity<Member>) => {
-    if (!newMember) return new Error()
+  getByNationalId: async (nationalId: string) => {
+    const foundedMember = members.find(member => member.nationalId === nationalId)
+    if (!foundedMember) return null
+
+    let isActiveMember: boolean = subscriptions.some(
+      subscription => {
+        if (subscription.memberId !== foundedMember.id) return false
+
+        const today = new Date()
+        const end = subscription.endDate
+
+        return (
+          today.getFullYear() < end.getFullYear() ||
+          (today.getFullYear() === end.getFullYear() && (
+            today.getMonth() < end.getMonth() ||
+            (today.getMonth() === end.getMonth() && today.getDate() <= end.getDate())
+          ))
+        )
+      }
+    )
 
     return {
+      ...foundedMember,
+      status: isActiveMember ? 'active' : 'inactive'
+    }
+  },
+  create: async (newMember: NewEntity<Member>) => {
+    return {
       id: 1,
-      ...newMember
-    } as Member
+      ...newMember,
+      status: "inactive" as const
+    }
   },
   update: async (id: number, updateData: Partial<NewEntity<Member>>) => {
     if (!updateData) return new Error()
