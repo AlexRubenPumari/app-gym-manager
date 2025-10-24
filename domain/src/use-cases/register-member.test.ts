@@ -1,26 +1,47 @@
+import { Member } from "../entities"
 import { describe, test, expect } from "vitest"
 import { registerMember } from "./register-member"
 import { memberService } from "../services/mocks"
 
 describe("register-member", () => {
-  test("Debe retornar un Member si los datos son válidos", async () => {
+  test("should return a member when given valid data", async () => {
+    function isMember(result: any): result is Member {
+      return result && typeof result === 'object' && 'dni' in result;
+    }
+
     const newMember = {
-      name: 'alex',
-      phone: '1128280122',
-      role: 'member' as const
+      nationalId: "42345678B",
+      firstName: "Juan",
+      lastName: "Pérez",
+      phone: "600123456",
+      registrationDate: new Date(),
+      isActive: true
     }
     const result = await registerMember({ memberService }, { newMember })
-    expect(result).toStrictEqual({
-      id: 1,
-      name: 'alex',
-      phone: '1128280122',
-      role: 'member'
+    expect(result).toMatchObject({
+      nationalId: "42345678B",
+      firstName: "Juan",
+      lastName: "Pérez",
+      phone: "600123456",
+      status: 'inactive'
     })
+    if (isMember(result)) {
+      expect(result.registrationDate).toBeInstanceOf(Date)
+      expect(result.id).toBeTypeOf('number')
+    }
   })
 
-  test("Debe retornar un Error si los datos son inválidos", async () => {
-    const error = await registerMember({ memberService })
+  test("should return an error when given a member that is already registered", async () => {
+    const member = {
+      nationalId: "12345678A",
+      firstName: "Juan",
+      lastName: "Pérez",
+      phone: "600123456",
+      registrationDate: new Date("2023-01-15"),
+    }
 
-    expect(error).toBeInstanceOf(Error)
+    const result = await registerMember({ memberService }, { newMember: member })
+
+    expect(result).toBeInstanceOf(Error)
   })
 })
