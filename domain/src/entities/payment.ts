@@ -1,12 +1,20 @@
-import { PaymentMethod } from "./payment-method"
-import { PaymentStatus } from "./payment-status"
+import { AbstractDate } from "../utils"
+
+export const PAYMENT_METHOD = {
+  CREDIT_CARD: "credit-card",
+  DEBIT_CARD: "debit-card",
+  CASH: "cash",
+  BANK_TRANSFER: "bank-transfer",
+  PAYPAL: "paypal"
+} as const
+
+type PaymentMethod = typeof PAYMENT_METHOD[keyof typeof PAYMENT_METHOD]
 
 export interface Payment {
-  id: string
-  memberId: string
+  id: number
+  memberId: number
+  subscriptionId: number
   amount: number
-  currency: string
-  paymentDate: Date
-  paymentMethod: PaymentMethod
-  status: PaymentStatus
+  paidAt: AbstractDate
+  method: PaymentMethod
 }
