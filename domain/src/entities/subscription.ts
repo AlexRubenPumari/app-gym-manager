@@ -1,11 +1,18 @@
-import { DateValue } from "../utils"
+import { AbstractDate } from "../utils"
 
-type SubscriptionStatus = 'active' | 'expired'
+export const SUBSCRIPTION_STATUS = {
+  ACTIVE: 'active',
+  EXPIRED: 'expired',
+} as const
+
+export type SubscriptionStatus = typeof SUBSCRIPTION_STATUS[keyof typeof SUBSCRIPTION_STATUS]
 
 export interface Subscription {
   id: number
-  startDate: DateValue
-  endDate: DateValue
-  status: SubscriptionStatus
   memberId: number
+  subscriptionType: string
+  startAt: AbstractDate
+  endAt: AbstractDate
+  status: SubscriptionStatus
+  price: number
 }
