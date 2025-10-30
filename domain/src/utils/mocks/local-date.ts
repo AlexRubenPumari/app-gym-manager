@@ -5,14 +5,20 @@ export class LocalDate extends AbstractDate {
   constructor(year: number, month: number, day: number)
 
   constructor(year?: number, month?: number, day?: number) {
-    if (year && month && day) super(year, month, day)
+    let y: number, m: number, d: number
 
-    const todayDate = new Date()
-    super(
-      todayDate.getUTCFullYear(),
-      todayDate.getUTCMonth() + 1,
-      todayDate.getUTCDate()
-    )
+    if (year !== undefined && month !== undefined && day !== undefined) {
+        y = year
+        m = month
+        d = day
+    } else {
+        const today = new Date()
+        y = today.getUTCFullYear()
+        m = today.getUTCMonth() + 1
+        d = today.getUTCDate()
+    }
+
+    super(y, m, d)
   }
 
   isEqual(otherDate: AbstractDate): boolean {
@@ -36,7 +42,7 @@ export class LocalDate extends AbstractDate {
   }
 
   addDays(days: number): AbstractDate {
-    const newDate = new Date(Date.UTC(this.year, this.month, this.day))
+    const newDate = new Date(Date.UTC(this.year, this.month - 1, this.day))
     newDate.setUTCDate(newDate.getUTCDate() + days)
 
     return new LocalDate(
