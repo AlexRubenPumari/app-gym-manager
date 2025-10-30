@@ -3,24 +3,25 @@ import { NewEntity } from "domain/src/utils"
 import { subscriptions } from "./data/subscriptions"
 import { members } from "./data/members"
 import { MemberService } from "../member-service"
+import { LocalDate } from "../../utils"
 
 export const memberService: MemberService = {
-  getById: async (id: number) => {
-    const foundedMember = members.find(member => member.id === id)
+  getById: async (member: { id: number }) => {
+    const foundedMember = members.find(({ id }) => member.id === id)
     if (!foundedMember) return null
 
     let isActiveMember: boolean = subscriptions.some(
       subscription => {
-        if (subscription.memberId !== id) return false
+        if (subscription.memberId !== member.id) return false
 
-        const today = new Date()
-        const end = subscription.endDate
+        const today = new LocalDate()
+        const endAt = subscription.endAt
 
         return (
-          today.getFullYear() < end.getFullYear() ||
-          (today.getFullYear() === end.getFullYear() && (
-            today.getMonth() < end.getMonth() ||
-            (today.getMonth() === end.getMonth() && today.getDate() <= end.getDate())
+          today.year < endAt.year ||
+          (today.year === endAt.year && (
+            today.month < endAt.month ||
+            (today.month === endAt.month && today.day <= endAt.day)
           ))
         )
       }
@@ -28,25 +29,30 @@ export const memberService: MemberService = {
 
     return {
       ...foundedMember,
+      registrationAt: new LocalDate(
+        foundedMember.registrationAt.getUTCFullYear(),
+        foundedMember.registrationAt.getUTCMonth() + 1,
+        foundedMember.registrationAt.getUTCDate(),
+      ),
       status: isActiveMember ? 'active' : 'inactive'
     }
   },
-  getByNationalId: async (nationalId: string) => {
-    const foundedMember = members.find(member => member.nationalId === nationalId)
+  getByNationalId: async (member: { nationalId: string }) => {
+    const foundedMember = members.find(({ nationalId }) => member.nationalId === nationalId)
     if (!foundedMember) return null
 
     let isActiveMember: boolean = subscriptions.some(
       subscription => {
         if (subscription.memberId !== foundedMember.id) return false
 
-        const today = new Date()
-        const end = subscription.endDate
+        const today = new LocalDate()
+        const endAt = subscription.endAt
 
         return (
-          today.getFullYear() < end.getFullYear() ||
-          (today.getFullYear() === end.getFullYear() && (
-            today.getMonth() < end.getMonth() ||
-            (today.getMonth() === end.getMonth() && today.getDate() <= end.getDate())
+          today.year < endAt.year ||
+          (today.year === endAt.year && (
+            today.month < endAt.month ||
+            (today.month === endAt.month && today.day <= endAt.day)
           ))
         )
       }
@@ -54,6 +60,11 @@ export const memberService: MemberService = {
 
     return {
       ...foundedMember,
+      registrationAt: new LocalDate(
+        foundedMember.registrationAt.getUTCFullYear(),
+        foundedMember.registrationAt.getUTCMonth() + 1,
+        foundedMember.registrationAt.getUTCDate(),
+      ),
       status: isActiveMember ? 'active' : 'inactive'
     }
   },
@@ -64,13 +75,8 @@ export const memberService: MemberService = {
       status: "inactive" as const
     }
   },
-  update: async (id: number, updateData: Partial<NewEntity<Member>>) => {
-    if (!updateData) return new Error()
-
-    const member = members.find(member => member.id === id)
-
-    if (!member) return new Error()
-
-    return { ...member, ...updateData } as Member
-  }
+  update: async (updateMember) => {
+  },
+  delete: async (member) => {
+  },
 }

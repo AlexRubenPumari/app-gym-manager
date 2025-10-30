@@ -1,35 +1,35 @@
 import { Subscription } from "domain/src/entities"
 import { subscriptions } from "./data/subscriptions"
+import { subscriptionTypes } from "./data/subscription-types"
 import { NewEntity } from "domain/src/utils"
+import { SubscriptionService } from "../subscription-service"
 
-export const subscriptionService = {
+export const subscriptionService: SubscriptionService = {
   getById: (id: number) => {
     const foundedSubscription = subscriptions.find(subscription => subscription.id === id)
     if (!foundedSubscription) return null
 
-    let isActiveSubscription = (subscription: NewEntity<Subscription>) => {
-      subscription.endDate.setHours(0, 0, 0, 0)
-      const todayDate = new Date()
-      todayDate.setHours(0, 0, 0, 0)
-
-      return subscription.endDate <= todayDate
+    let isActiveSubscription = subscription => {
+      const todayDate = dataService.now()
+      return (
+        dateService.isEqual(subscription.endAt, todayDate) ||
+        dataService.isBefore(subscription.endAt, todayDate)
+      )
     }
 
     const subscriptionStatus = isActiveSubscription(foundedSubscription) ? 'active' : 'expired'
 
     return { ...foundedSubscription, status: subscriptionStatus }
   },
-  create: (newSubscription: NewEntity<Subscription>) => {
+  create: async (newSubscription: NewEntity<Subscription>) => {
     return {
       id: 10,
       ...newSubscription,
       status: 'active'
     }
   },
-  update: (id: number) => {
-    
+  update: async (updateSubscription: { id: number }) => {
   },
-  delete: (id: number) => {
-    
+  delete: async (subscription: { id: number }) => {
   }, 
 }

@@ -8,7 +8,7 @@ export const PAYMENT_METHOD = {
   PAYPAL: "paypal"
 } as const
 
-type PaymentMethod = typeof PAYMENT_METHOD[keyof typeof PAYMENT_METHOD]
+export type PaymentMethod = typeof PAYMENT_METHOD[keyof typeof PAYMENT_METHOD]
 
 export interface Payment {
   id: number

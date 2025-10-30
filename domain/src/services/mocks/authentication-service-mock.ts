@@ -1,10 +1,10 @@
 import { StaffRol } from "domain/src/entities"
 import { AuthenticationService } from "../authentication-service"
-import { staffMembers } from "./data/staff-members"
+import { staff } from "./data/staff"
 
 export const authenticationService: AuthenticationService = {
   authenticateStaff: async (email: string, password: string) => {
-    const authenticatedStaff = staffMembers.find(staffMember => (
+    const authenticatedStaff = staff.find(staffMember => (
       staffMember.email === email && staffMember.password === password
     ))
 

@@ -14,7 +14,7 @@ export async function registerMember (
   { memberService } : RegisterMemberDeps, { newMember }: RegisterMemberPayload
 ) {
 
-  const existingMember = await memberService.getByNationalId(newMember.nationalId)
+  const existingMember = await memberService.getByNationalId(newMember)
   if (existingMember) return new Error("Member already exists")
 
   const result = await memberService.create(newMember)

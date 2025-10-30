@@ -5,9 +5,9 @@ export const MEMBER_STATUS = {
   INACTIVE: 'inactive',
 } as const
 
-type MemberStatus = typeof MEMBER_STATUS[keyof typeof MEMBER_STATUS]
+export type MemberStatus = typeof MEMBER_STATUS[keyof typeof MEMBER_STATUS]
 
 export interface Member extends Entity, Person {
-  registrationDate: AbstractDate,
+  registrationAt: AbstractDate,
   status: MemberStatus
 }
