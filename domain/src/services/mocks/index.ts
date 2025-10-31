@@ -1,5 +1,5 @@
 export * from "./member-service-mock"
-export * from "./authentication-service-mock"
+export * from "./auth-service-mock"
 export * from "./subscription-service-mock"
 export * from "./subscription-type-service-mock"
 export * from "./payment-service-mock"

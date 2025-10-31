@@ -1,4 +1,6 @@
-export const staff = [
+import { Staff } from "domain/src/entities";
+
+export const staff: Staff[] = [
   {
     id: 1,
     firstName: 'Gabriel',
@@ -6,7 +8,7 @@ export const staff = [
     username: 'gabby12',
     email: 'perez-gab@gmail.com',
     password: '123',
-    dni: '34433434',
+    nationalId: '34433434',
     role: 'admin'
   },
   {
@@ -16,7 +18,7 @@ export const staff = [
     username: 'lauraT88',
     email: 'laura.martinez@gmail.com',
     password: '111',
-    dni: '55667788',
+    nationalId: '55667788',
     role: 'trainer'
   }
 ]

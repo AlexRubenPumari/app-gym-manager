@@ -1,6 +1,5 @@
 export * from "./mocks/index"
-export * from "./authentication-service"
-export * from "./date-services"
+export * from "./auth-service"
 export * from "./member-service"
 export * from "./payment-service"
 export * from "./subscription-service"
