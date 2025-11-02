@@ -1,0 +1,1 @@
+export type New<Type extends Object> = Omit<Type, 'id' | 'status'>

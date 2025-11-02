@@ -1,14 +1,14 @@
-import { Entity, NewEntity, UpdateEntity } from "./"
+import { Entity, New, Updatable, Safe } from ".."
 
 export interface Service<EntityType extends Entity>
   extends QueryService<EntityType>, StorageService<EntityType> {}
 
 export interface QueryService<EntityType extends Entity> {
-  getById: (entity: Entity) => Promise<EntityType | null>
+  getById: (entity: Entity) => Promise<Safe<EntityType> | null>
 }
 
 export interface StorageService<EntityType extends Entity> {
-  create: (newEntity: NewEntity<EntityType>) => Promise<EntityType>
-  update: (updateEntity: UpdateEntity<EntityType>) => Promise<void>
+  create: (newEntity: New<EntityType>) => Promise<Safe<EntityType>>
+  update: (updateEntity: Updatable<EntityType>) => Promise<void>
   delete: (entity: Entity) => Promise<void>
 }
