@@ -1,4 +1,4 @@
-import { NewEntity } from "../utils"
+import { New } from "../utils"
 import { Member } from "../entities"
 import { MemberService } from "../services"
 
@@ -7,7 +7,7 @@ interface RegisterMemberDeps {
 }
 
 interface RegisterMemberPayload {
-  newMember: NewEntity<Member>,
+  newMember: New<Member>,
 }
 
 export async function registerMember (
