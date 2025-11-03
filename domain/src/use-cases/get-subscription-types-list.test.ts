@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest"
-import { getSubscriptionTypesList } from "./get-subscription-types-list.js"
+import { getSubscriptionTypesList } from "./get-subscription-types-list"
 import { subscriptionTypeService } from "../services"
 
 describe("get-subscription-types-list", async () => {

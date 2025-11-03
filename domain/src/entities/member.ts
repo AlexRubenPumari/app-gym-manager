@@ -1,4 +1,4 @@
-import { Date, Person, Entity } from "../utils"
+import { Date, Person, Entity, New } from "../utils"
 
 export const MEMBER_STATUS = {
   ACTIVE: 'active',
@@ -11,3 +11,5 @@ export interface Member extends Entity, Person {
   registrationAt: Date,
   status: MemberStatus
 }
+
+export type NewMember = Omit<New<Member>, 'registrationAt'>

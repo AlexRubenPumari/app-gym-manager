@@ -1,6 +1,6 @@
 import { MemberService, DateService } from "../services"
-import { New } from "../utils"
-import { Member } from "../entities"
+import { NewMember } from "../entities"
+
 
 interface RegisterMemberDeps {
   memberService: MemberService
@@ -8,7 +8,7 @@ interface RegisterMemberDeps {
 }
 
 interface RegisterMemberPayload {
-  newMember: New<Member>,
+  newMember: NewMember,
 }
 
 export async function registerMember (

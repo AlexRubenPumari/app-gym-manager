@@ -1,6 +1,6 @@
 import { payments } from "./data/payment"
 import { PaymentService } from "../payment-service"
-import { NewEntity } from "../../utils"
+import { New } from "../../utils"
 import { Payment } from "../../entities"
 
 export const paymentService: PaymentService = {
@@ -10,7 +10,7 @@ export const paymentService: PaymentService = {
 
     return { ...result }
   },
-  create: async (newPayment: NewEntity<Payment>) => {
+  create: async (newPayment: New<Payment>) => {
     return {
       ...newPayment,
       id: 10
