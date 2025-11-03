@@ -1,4 +1,4 @@
-import { AbstractDate, Person, Entity } from "../utils"
+import { Date, Person, Entity } from "../utils"
 
 export const MEMBER_STATUS = {
   ACTIVE: 'active',
@@ -8,6 +8,6 @@ export const MEMBER_STATUS = {
 export type MemberStatus = typeof MEMBER_STATUS[keyof typeof MEMBER_STATUS]
 
 export interface Member extends Entity, Person {
-  registrationAt: AbstractDate,
+  registrationAt: Date,
   status: MemberStatus
 }

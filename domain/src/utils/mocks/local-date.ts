@@ -1,31 +1,31 @@
-import { AbstractDate } from "../abstract-date"
+import { Date as DateType } from "../types"
 
-export class LocalDate extends AbstractDate {
+export class LocalDate {
+  day: number
+  month: number
+  year: number
+
   constructor()
   constructor(year: number, month: number, day: number)
 
   constructor(year?: number, month?: number, day?: number) {
-    let y: number, m: number, d: number
-
-    if (year !== undefined && month !== undefined && day !== undefined) {
-        y = year
-        m = month
-        d = day
+    if (year && month && day) {
+        this.year = year
+        this.month = month
+        this.day = day
     } else {
         const today = new Date()
-        y = today.getUTCFullYear()
-        m = today.getUTCMonth() + 1
-        d = today.getUTCDate()
+        this.year = today.getUTCFullYear()
+        this.month = today.getUTCMonth() + 1
+        this.day = today.getUTCDate()
     }
-
-    super(y, m, d)
   }
 
-  isEqual(otherDate: AbstractDate): boolean {
+  isEqual(otherDate: DateType): boolean {
     return this.day === otherDate.day && this.month === otherDate.month && this.year === otherDate.year
   }
 
-  isBefore(otherDate: AbstractDate): boolean {
+  isBefore(otherDate: DateType): boolean {
     if (this.year < otherDate.year) return true
     if (this.year > otherDate.year) return false
 
@@ -37,11 +37,11 @@ export class LocalDate extends AbstractDate {
     return false
   }
 
-  isAfter(otherDate: AbstractDate): boolean {
+  isAfter(otherDate: DateType): boolean {
     return !this.isEqual(otherDate) && !this.isBefore(otherDate)
   }
 
-  addDays(days: number): AbstractDate {
+  addDays(days: number): LocalDate {
     const newDate = new Date(Date.UTC(this.year, this.month - 1, this.day))
     newDate.setUTCDate(newDate.getUTCDate() + days)
 
@@ -52,7 +52,7 @@ export class LocalDate extends AbstractDate {
     )
   }
 
-  subtractDays(days: number): AbstractDate {
+  subtractDays(days: number): LocalDate {
     return this.addDays(days * (-1))
   }
 }

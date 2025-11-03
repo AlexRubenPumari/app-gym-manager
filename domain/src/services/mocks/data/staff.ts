@@ -3,12 +3,12 @@ import { Staff } from "domain/src/entities";
 export const staff: Staff[] = [
   {
     id: 1,
+    nationalId: '34433434',
     firstName: 'Gabriel',
     lastName: 'Perez',
     username: 'gabby12',
     email: 'perez-gab@gmail.com',
     password: '123',
-    nationalId: '34433434',
     role: 'admin'
   },
   {

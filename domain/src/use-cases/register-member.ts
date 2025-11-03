@@ -1,9 +1,10 @@
+import { MemberService, DateService } from "../services"
 import { New } from "../utils"
 import { Member } from "../entities"
-import { MemberService } from "../services"
 
 interface RegisterMemberDeps {
   memberService: MemberService
+  dateService: DateService
 }
 
 interface RegisterMemberPayload {
@@ -11,13 +12,14 @@ interface RegisterMemberPayload {
 }
 
 export async function registerMember (
-  { memberService } : RegisterMemberDeps, { newMember }: RegisterMemberPayload
+  { memberService, dateService } : RegisterMemberDeps, { newMember }: RegisterMemberPayload
 ) {
 
   const existingMember = await memberService.getByNationalId(newMember)
   if (existingMember) return new Error("Member already exists")
-
-  const result = await memberService.create(newMember)
+    
+  const memberToCreate = { ...newMember, registrationAt: dateService.now() }
+  const result = await memberService.create(memberToCreate)
 
   return result
 }

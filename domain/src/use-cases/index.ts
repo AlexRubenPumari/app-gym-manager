@@ -1,3 +1,6 @@
 export * from "./get-member"
+export * from "./login-staff"
 export * from "./register-member"
+export * from "./register-staff"
 export * from "./start-member-subscription"
+export * from "./validate-member-entry"

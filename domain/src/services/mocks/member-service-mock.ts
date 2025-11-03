@@ -1,9 +1,8 @@
 import { Member } from "domain/src/entities"
-import { NewEntity } from "domain/src/utils"
+import { New } from "domain/src/utils"
 import { subscriptions } from "./data/subscriptions"
 import { members } from "./data/members"
 import { MemberService } from "../member-service"
-import { LocalDate } from "../../utils"
 
 export const memberService: MemberService = {
   getById: async (member: { id: number }) => {
@@ -14,7 +13,8 @@ export const memberService: MemberService = {
       subscription => {
         if (subscription.memberId !== member.id) return false
 
-        const today = new LocalDate()
+        const date = new Date()
+        const today = { day: date.getUTCDate(), month: date.getUTCMonth() + 1, year: date.getUTCFullYear() }
         const endAt = subscription.endAt
 
         return (
@@ -27,13 +27,15 @@ export const memberService: MemberService = {
       }
     )
 
+    const registrationDate = {
+      day: foundedMember.registrationAt.getUTCDate(),
+      month: foundedMember.registrationAt.getUTCMonth() + 1,
+      year: foundedMember.registrationAt.getUTCFullYear(),
+    }
+
     return {
       ...foundedMember,
-      registrationAt: new LocalDate(
-        foundedMember.registrationAt.getUTCFullYear(),
-        foundedMember.registrationAt.getUTCMonth() + 1,
-        foundedMember.registrationAt.getUTCDate(),
-      ),
+      registrationAt: registrationDate,
       status: isActiveMember ? 'active' : 'inactive'
     }
   },
@@ -45,7 +47,8 @@ export const memberService: MemberService = {
       subscription => {
         if (subscription.memberId !== foundedMember.id) return false
 
-        const today = new LocalDate()
+        const date = new Date()
+        const today = { day: date.getUTCDate(), month: date.getUTCMonth() + 1, year: date.getUTCFullYear() }
         const endAt = subscription.endAt
 
         return (
@@ -58,17 +61,19 @@ export const memberService: MemberService = {
       }
     )
 
+    const registrationDate = {
+      day: foundedMember.registrationAt.getUTCDate(),
+      month: foundedMember.registrationAt.getUTCMonth() + 1,
+      year: foundedMember.registrationAt.getUTCFullYear(),
+    }
+
     return {
       ...foundedMember,
-      registrationAt: new LocalDate(
-        foundedMember.registrationAt.getUTCFullYear(),
-        foundedMember.registrationAt.getUTCMonth() + 1,
-        foundedMember.registrationAt.getUTCDate(),
-      ),
+      registrationAt: registrationDate,
       status: isActiveMember ? 'active' : 'inactive'
     }
   },
-  create: async (newMember: NewEntity<Member>) => {
+  create: async (newMember: New<Member>) => {
     return {
       id: 1,
       ...newMember,
