@@ -1,6 +1,6 @@
 import { describe, test, expect } from "vitest"
 import { authService } from "../services"
-import { login } from "./login"
+import { loginStaff } from "./login-staff"
 
 describe("login", () => {
   test("should return a safe staff when credentials are valid", async () => {
@@ -15,13 +15,13 @@ describe("login", () => {
       role: 'admin'
     }
 
-    const result = await login({ authService }, { staff: validCredentials })
+    const result = await loginStaff({ authService }, { staff: validCredentials })
 
     expect(result).toEqual(staff)
   })
 
   test("should return a error when credentials are invalid", async () => {
-    const result = await login(
+    const result = await loginStaff(
       { authService },
       { staff: { email: "fake-email@gmail.com", password: "fake_password" } }
     )
@@ -32,7 +32,7 @@ describe("login", () => {
   test("should return a error when email or password is missing", async () => {
     const incompleteCredentials = { email: "", password: "" }
 
-    const result = await login({ authService }, { staff: incompleteCredentials })
+    const result = await loginStaff({ authService }, { staff: incompleteCredentials })
 
     expect(result).toBeInstanceOf(Error)
   })
