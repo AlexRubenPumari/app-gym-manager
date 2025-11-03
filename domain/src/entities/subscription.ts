@@ -1,4 +1,4 @@
-import { AbstractDate } from "../utils"
+import { Date, Entity } from "../utils"
 
 export const SUBSCRIPTION_STATUS = {
   ACTIVE: 'active',
@@ -7,12 +7,11 @@ export const SUBSCRIPTION_STATUS = {
 
 export type SubscriptionStatus = typeof SUBSCRIPTION_STATUS[keyof typeof SUBSCRIPTION_STATUS]
 
-export interface Subscription {
-  id: number
+export interface Subscription extends Entity {
   memberId: number
   subscriptionType: string
-  startAt: AbstractDate
-  endAt: AbstractDate
+  startAt: Date
+  endAt: Date
   status: SubscriptionStatus
   price: number
 }
