@@ -1,15 +1,15 @@
+import { Subscription } from "./subscription"
 import { Date, Person, Entity, New } from "../utils"
 
 export const MEMBER_STATUS = {
   ACTIVE: 'active',
-  INACTIVE: 'inactive',
+  BANNED: 'banned',
 } as const
 
 export type MemberStatus = typeof MEMBER_STATUS[keyof typeof MEMBER_STATUS]
 
 export interface Member extends Entity, Person {
   registrationAt: Date,
-  status: MemberStatus
+  status: MemberStatus,
+  subscription?: Subscription,
 }
-
-export type NewMember = Omit<New<Member>, 'registrationAt'>
