@@ -1,7 +1,7 @@
 import { Subscription } from "domain/src/entities"
 import { subscriptions } from "./data/subscriptions"
 import { subscriptionTypes } from "./data/subscription-types"
-import { NewEntity } from "domain/src/utils"
+import { New } from "domain/src/utils"
 import { SubscriptionService } from "../subscription-service"
 
 export const subscriptionService: SubscriptionService = {
@@ -21,7 +21,7 @@ export const subscriptionService: SubscriptionService = {
 
     return { ...foundedSubscription, status: subscriptionStatus }
   },
-  create: async (newSubscription: NewEntity<Subscription>) => {
+  create: async (newSubscription: New<Subscription>) => {
     return {
       id: 10,
       ...newSubscription,

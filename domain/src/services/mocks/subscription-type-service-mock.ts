@@ -8,6 +8,9 @@ export const subscriptionTypeService: SubscriptionTypeService = {
 
     return { ...result }
   },
+  getAll: async () => {
+    return [...subscriptionTypes]
+  },
   create: async (newSubscriptionType: { description: string, price: number }) => {
     return {
       ...newSubscriptionType,

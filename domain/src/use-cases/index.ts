@@ -1,4 +1,5 @@
 export * from "./get-member"
+export * from "./get-subscription-types-list"
 export * from "./login-staff"
 export * from "./register-member"
 export * from "./register-staff"
