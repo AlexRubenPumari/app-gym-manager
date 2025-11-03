@@ -1,11 +1,9 @@
 import { describe, test, expect } from "vitest"
 import { getMember } from "./get-member"
 import { memberService } from "../services/mocks"
-import { AbstractDate } from "../utils"
 
 describe("get-member", () => {
   test("should return a member with active status when pass an active member id", async () => {
-
     const activeMember = await getMember({ memberService }, { member: { id: 1 } })
     expect(activeMember).toMatchObject({
       id: 1,
@@ -16,7 +14,12 @@ describe("get-member", () => {
       status: 'active'
     })
     if (!(activeMember instanceof Error)) {
-      expect(activeMember.registrationAt).toBeInstanceOf(AbstractDate)
+      expect(Object.keys(activeMember.registrationAt)).toEqual(['day', 'month', 'year'])
+      expect(activeMember.registrationAt).toEqual({
+        day: expect.any(Number),
+        month: expect.any(Number),
+        year: expect.any(Number),
+      })
     }
   })
 
@@ -31,7 +34,12 @@ describe("get-member", () => {
       status: 'inactive'
     })
     if (!(inactiveMember instanceof Error)) {
-      expect(inactiveMember.registrationAt).toBeInstanceOf(AbstractDate)
+      expect(Object.keys(inactiveMember.registrationAt)).toEqual(['day', 'month', 'year'])
+      expect(inactiveMember.registrationAt).toEqual({
+        day: expect.any(Number),
+        month: expect.any(Number),
+        year: expect.any(Number),
+      })
     }
   })
 

@@ -8,9 +8,11 @@ interface GetMemberPayload {
   member: { id: number },
 }
 
-export async function getMember (dependencies: GetMemberDeps, payload: GetMemberPayload) {
-  const member = await dependencies.memberService.getById(payload.member)
-  if (!member) return new Error("Member not found")
+export async function getMember (
+  { memberService }: GetMemberDeps, { member }: GetMemberPayload
+) {
+  const foundedMember = await memberService.getById(member)
+  if (!foundedMember) return new Error("Member not found")
 
-  return member
+  return foundedMember
 }
