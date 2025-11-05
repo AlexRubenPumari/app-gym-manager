@@ -3,7 +3,7 @@ import { registerStaff } from "./register-staff"
 import { staffService } from "../services/mocks"
 
 describe("register-staff", () => {
-  test("should return a safe staff if the staff does not exist", async () => {
+  test("should return a staff if the staff does not exist", async () => {
     const newStaff = {
       nationalId: '34432034',
       firstName: 'Maria',

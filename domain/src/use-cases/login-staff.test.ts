@@ -3,7 +3,7 @@ import { authService } from "../services"
 import { loginStaff } from "./login-staff"
 
 describe("login", () => {
-  test("should return a safe staff when credentials are valid", async () => {
+  test("should return a staff when credentials are valid", async () => {
     const validCredentials = { email: "perez-gab@gmail.com", password: "123" }
     const staff = {
       id: 1,

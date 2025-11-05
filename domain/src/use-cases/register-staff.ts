@@ -1,3 +1,4 @@
+import { StaffViewModel } from "../view-models"
 import { New } from "../utils"
 import { Staff } from "../entities"
 import { StaffService } from "../services"
@@ -12,7 +13,7 @@ interface RegisterStaffPayload {
 
 export async function registerStaff (
   { staffService } : RegisterStaffDeps, { newStaff }: RegisterStaffPayload
-) {
+): Promise<Error | StaffViewModel> {
   const existingStaff = await staffService.getByEmail(newStaff)
   if (existingStaff) return new Error("Staff already exists")
 

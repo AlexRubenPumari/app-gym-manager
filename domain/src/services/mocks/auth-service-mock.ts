@@ -9,8 +9,6 @@ export const authService: AuthService = {
     const isValidPassword = staff.password === foundedStaff.password
     if (!isValidPassword) return null
 
-    const { password, ...safeStaff } = foundedStaff
-
-    return safeStaff
+    return { ...foundedStaff }
   },
 }

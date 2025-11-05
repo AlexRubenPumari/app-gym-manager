@@ -1,4 +1,5 @@
 import { AuthService } from "../services"
+import { StaffViewModel } from "../view-models"
 
 interface LoginStaffDeps {
   authService: AuthService
@@ -8,7 +9,9 @@ interface LoginStaffPayload {
   staff: { email: string, password: string }
 }
 
-export async function loginStaff ({ authService }: LoginStaffDeps, { staff }: LoginStaffPayload) {
+export async function loginStaff (
+  { authService }: LoginStaffDeps, { staff }: LoginStaffPayload
+): Promise<StaffViewModel | Error> {
   if (!staff.email || !staff.password) return new Error("Email and password are required")
 
   const validatedStaff = await authService.validateCredentials(staff)

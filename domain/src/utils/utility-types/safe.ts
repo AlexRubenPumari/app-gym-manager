@@ -1,1 +1,0 @@
-export type Safe<Type extends Object> = Omit<Type, 'password'>
