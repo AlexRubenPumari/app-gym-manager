@@ -1,6 +1,5 @@
 import { describe, test, expect } from "vitest"
-import { memberService, subscriptionService, subscriptionTypeService, paymentService } from "../services/mocks"
-import { AbstractDate } from "../utils"
+import { memberService, subscriptionService, subscriptionTypeService, paymentService, dateService } from "../services/mocks"
 import { startMemberSubscription } from "./start-member-subscription"
 
 describe("start-member-subscription", () => {
@@ -43,8 +42,8 @@ describe("start-member-subscription", () => {
       expect(subscription.id).toBeTypeOf("number")
       expect(subscription.subscriptionType).toBeTypeOf("string")
       expect(subscription.price).toBeTypeOf("number")
-      expect(subscription.startAt).toBeInstanceOf(AbstractDate)
-      expect(subscription.endAt).toBeInstanceOf(AbstractDate)
+      expect(subscription.startAt).toEqual(dateService.now())
+      expect(subscription.endAt).toBeInstanceOf(dateService.now().addDays(30))
       expect(subscription).toMatchObject({
         status: "active",
         memberId: 1
@@ -52,7 +51,7 @@ describe("start-member-subscription", () => {
 
       expect(payment.id).toBeTypeOf("number")
       expect(payment.subscriptionId).toBeTypeOf("number")
-      expect(payment.paidAt).toBeInstanceOf(AbstractDate)
+      expect(payment.paidAt).toBeInstanceOf(dateService.now())
       expect(payment).toMatchObject({
         memberId: 1,
         amount: subscription.price,

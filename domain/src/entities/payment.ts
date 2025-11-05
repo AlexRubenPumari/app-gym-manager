@@ -1,4 +1,4 @@
-import { AbstractDate } from "../utils"
+import { Date } from "../utils"
 
 export const PAYMENT_METHOD = {
   CREDIT_CARD: "credit-card",
@@ -15,6 +15,6 @@ export interface Payment {
   memberId: number
   subscriptionId: number
   amount: number
-  paidAt: AbstractDate
+  paidAt: Date
   method: PaymentMethod
 }
