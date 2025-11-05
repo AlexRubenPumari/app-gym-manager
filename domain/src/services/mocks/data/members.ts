@@ -5,6 +5,7 @@ export const members = [
     firstName: "Juan",
     lastName: "Pérez",
     phone: "600123456",
+    status: "active",
     registrationAt: new Date("2023-01-15"),
   },
   {
@@ -12,6 +13,7 @@ export const members = [
     nationalId: "87654321B",
     firstName: "María",
     lastName: "Gómez",
+    status: "active",
     registrationAt: new Date("2022-09-10"),
   },
   {
@@ -20,6 +22,15 @@ export const members = [
     firstName: "Luis",
     lastName: "Martínez",
     phone: "600987654",
+    status: "active",
     registrationAt: new Date("2024-03-22"),
+  },
+  {
+    id: 4,
+    nationalId: "11223344D",
+    firstName: "Maria",
+    lastName: "Marca",
+    status: "banned",
+    registrationAt: new Date("2024-02-22"),
   }
 ]

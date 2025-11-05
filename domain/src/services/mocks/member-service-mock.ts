@@ -1,118 +1,58 @@
-import { Member } from "domain/src/entities"
+import { Member, MemberStatus } from "domain/src/entities"
 import { New } from "domain/src/utils"
-import { subscriptions } from "./data/subscriptions"
 import { members } from "./data/members"
 import { MemberService } from "../member-service"
+import { subscriptionService } from "./subscription-service-mock"
+import { parseDateToDateObject } from "./logic"
+
+function getSubscriptionByMember(member: { id: number }) {
+  return subscriptionService.getById(member)
+}
+
+async function createMember(member: {
+  id: number;
+  nationalId: string;
+  firstName: string;
+  lastName: string;
+  phone?: string;
+  status: string;
+  registrationAt: Date;
+}): Promise<Member> {
+  const registrationDate = parseDateToDateObject(member.registrationAt)
+  const status = member.status as MemberStatus
+
+  const memberSubscription = await getSubscriptionByMember(member)
+
+  let result = { ...member, status: status, registrationAt: registrationDate }
+
+  if (!memberSubscription) return result
+
+  return { ...result, subscription: memberSubscription }
+}
 
 export const memberService: MemberService = {
   getAll: async () => {
-    return members.map(
-      currentMember => {
-        let isActiveMember: boolean = subscriptions.some(
-          subscription => {
-            if (subscription.memberId !== currentMember.id) return false
-
-            const date = new Date()
-            const today = { day: date.getUTCDate(), month: date.getUTCMonth() + 1, year: date.getUTCFullYear() }
-            const endAt = subscription.endAt
-
-            return (
-              today.year < endAt.year ||
-              (today.year === endAt.year && (
-                today.month < endAt.month ||
-                (today.month === endAt.month && today.day <= endAt.day)
-              ))
-            )
-          }
-        )
-
-        const registrationDate = {
-          day: currentMember.registrationAt.getUTCDate(),
-          month: currentMember.registrationAt.getUTCMonth() + 1,
-          year: currentMember.registrationAt.getUTCFullYear(),
-        }
-
-        return {
-          ...currentMember,
-          registrationAt: registrationDate,
-          status: isActiveMember ? 'active' : 'inactive'
-        }
-      }
+    return await Promise.all(
+      members.map(member => createMember(member))
     )
   },
   getById: async (member: { id: number }) => {
     const foundedMember = members.find(({ id }) => member.id === id)
     if (!foundedMember) return null
 
-    let isActiveMember: boolean = subscriptions.some(
-      subscription => {
-        if (subscription.memberId !== member.id) return false
-
-        const date = new Date()
-        const today = { day: date.getUTCDate(), month: date.getUTCMonth() + 1, year: date.getUTCFullYear() }
-        const endAt = subscription.endAt
-
-        return (
-          today.year < endAt.year ||
-          (today.year === endAt.year && (
-            today.month < endAt.month ||
-            (today.month === endAt.month && today.day <= endAt.day)
-          ))
-        )
-      }
-    )
-
-    const registrationDate = {
-      day: foundedMember.registrationAt.getUTCDate(),
-      month: foundedMember.registrationAt.getUTCMonth() + 1,
-      year: foundedMember.registrationAt.getUTCFullYear(),
-    }
-
-    return {
-      ...foundedMember,
-      registrationAt: registrationDate,
-      status: isActiveMember ? 'active' : 'inactive'
-    }
+    return createMember(foundedMember)
   },
   getByNationalId: async (member: { nationalId: string }) => {
     const foundedMember = members.find(({ nationalId }) => member.nationalId === nationalId)
     if (!foundedMember) return null
 
-    let isActiveMember: boolean = subscriptions.some(
-      subscription => {
-        if (subscription.memberId !== foundedMember.id) return false
-
-        const date = new Date()
-        const today = { day: date.getUTCDate(), month: date.getUTCMonth() + 1, year: date.getUTCFullYear() }
-        const endAt = subscription.endAt
-
-        return (
-          today.year < endAt.year ||
-          (today.year === endAt.year && (
-            today.month < endAt.month ||
-            (today.month === endAt.month && today.day <= endAt.day)
-          ))
-        )
-      }
-    )
-
-    const registrationDate = {
-      day: foundedMember.registrationAt.getUTCDate(),
-      month: foundedMember.registrationAt.getUTCMonth() + 1,
-      year: foundedMember.registrationAt.getUTCFullYear(),
-    }
-
-    return {
-      ...foundedMember,
-      registrationAt: registrationDate,
-      status: isActiveMember ? 'active' : 'inactive'
-    }
+    return createMember(foundedMember)
   },
   create: async (newMember: New<Member>) => {
     return {
       id: 1,
       ...newMember,
-      status: "inactive" as const
+      status: "active" as const
     }
   },
   update: async (updateMember) => {

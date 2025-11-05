@@ -1,25 +1,47 @@
 import { Subscription } from "domain/src/entities"
 import { subscriptions } from "./data/subscriptions"
 import { subscriptionTypes } from "./data/subscription-types"
-import { New } from "domain/src/utils"
+import { New, Date as DateObject } from "domain/src/utils"
 import { SubscriptionService } from "../subscription-service"
 
+import { parseDateToDateObject, isBeforeDateObject, isEqualDateObject } from "./logic"
+
+function isActiveSubscription(subscription: { endAt: DateObject }) {
+  const todayDate = parseDateToDateObject(new Date())
+  return isEqualDateObject(todayDate, subscription.endAt) || isBeforeDateObject(todayDate, subscription.endAt)
+}
+
+function createSubscriptionViewModel(
+  subscription: {
+    id: number; startAt: DateObject; endAt: DateObject; memberId: number;subscriptionTypeId: number;
+  }
+): Subscription {
+  const subscriptionStatus = isActiveSubscription(subscription)
+    ? 'active'
+    : 'expired'
+
+  return {
+    ...subscription,
+    price: getSubscriptionPrice(subscription.subscriptionTypeId),
+    subscriptionType: getSubscriptionDescription(subscription.subscriptionTypeId),
+    status: subscriptionStatus
+  }
+}
+
+function getSubscriptionPrice(subscriptionTypeId: number) {
+  return subscriptionTypes.find(({ id }) => id === subscriptionTypeId)?.price as number
+}
+
+function getSubscriptionDescription(subscriptionTypeId: number) {
+  return subscriptionTypes.find(({ id }) => id === subscriptionTypeId)?.description as string
+}
+
 export const subscriptionService: SubscriptionService = {
-  getById: (id: number) => {
-    const foundedSubscription = subscriptions.find(subscription => subscription.id === id)
+  getById: async (subscription: { id: number }) => {
+    const foundedSubscription = subscriptions.find(({ id }) => subscription.id === id)
     if (!foundedSubscription) return null
 
-    let isActiveSubscription = subscription => {
-      const todayDate = dataService.now()
-      return (
-        dateService.isEqual(subscription.endAt, todayDate) ||
-        dataService.isBefore(subscription.endAt, todayDate)
-      )
-    }
-
-    const subscriptionStatus = isActiveSubscription(foundedSubscription) ? 'active' : 'expired'
-
-    return { ...foundedSubscription, status: subscriptionStatus }
+    return createSubscriptionViewModel(foundedSubscription)
   },
   create: async (newSubscription: New<Subscription>) => {
     return {
@@ -31,5 +53,5 @@ export const subscriptionService: SubscriptionService = {
   update: async (updateSubscription: { id: number }) => {
   },
   delete: async (subscription: { id: number }) => {
-  }, 
+  },
 }
