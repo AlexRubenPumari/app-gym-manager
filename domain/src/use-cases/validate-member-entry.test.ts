@@ -15,6 +15,12 @@ describe("validate-member-entry", () => {
     expect(result).toBeInstanceOf(Error)
   })
 
+  test("should return an error if the member is banned", async () => {
+    const result = await validateMemberEntry({ memberService }, { member: { id: 4 } })
+
+    expect(result).toBeInstanceOf(Error)
+  })
+
   test("should return the member if it has an active subscription", async () => {
     const member = {
       id: 1,
@@ -27,6 +33,6 @@ describe("validate-member-entry", () => {
     }
     const result = await validateMemberEntry({ memberService }, { member: { id: 1 } })
 
-    expect(result).toEqual(member)
+    expect(result).toMatchObject(member)
   })
 })

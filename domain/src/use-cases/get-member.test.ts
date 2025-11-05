@@ -23,23 +23,24 @@ describe("get-member", () => {
     }
   })
 
-  test("should return a member with inactive status when pass an inactive member id", async () => {
-    const inactiveMember = await getMember({ memberService }, { member: { id: 3 } })
-    expect(inactiveMember).toMatchObject({
+  test("should return a member without subscription when pass an member without subscription id", async () => {
+    const member = await getMember({ memberService }, { member: { id: 3 } })
+    expect(member).toMatchObject({
       id: 3,
       nationalId: "11223344C",
       firstName: "Luis",
       lastName: "Martínez",
       phone: "600987654",
-      status: 'inactive'
+      status: 'active'
     })
-    if (!(inactiveMember instanceof Error)) {
-      expect(Object.keys(inactiveMember.registrationAt)).toEqual(['day', 'month', 'year'])
-      expect(inactiveMember.registrationAt).toEqual({
+    if (!(member instanceof Error)) {
+      expect(Object.keys(member.registrationAt)).toEqual(['day', 'month', 'year'])
+      expect(member.registrationAt).toEqual({
         day: expect.any(Number),
         month: expect.any(Number),
         year: expect.any(Number),
       })
+      expect(member.subscription).toBeUndefined()
     }
   })
 

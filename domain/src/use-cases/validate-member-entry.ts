@@ -1,5 +1,5 @@
-import { MEMBER_STATUS } from "../entities"
 import { MemberService } from "../services"
+import { hasSubscription, isBanned } from "../validations"
 
 interface ValidateMemberEntryDeps {
   memberService: MemberService
@@ -14,11 +14,15 @@ export async function validateMemberEntry (
   { member }: ValidateMemberEntryPayload
 ) {
   const foundedMember = await memberService.getById(member)
+  
   if (!foundedMember) {
     return new Error("Member not found")
   }
-  if (foundedMember.status !== MEMBER_STATUS.ACTIVE) {
-    return new Error("Member does not have an active subscription")
+  if (!hasSubscription(foundedMember)) {
+    return new Error("Member does not have a subscription")
+  }
+  if (isBanned(foundedMember)) {
+    return new Error("Member is banned")
   }
 
   return foundedMember

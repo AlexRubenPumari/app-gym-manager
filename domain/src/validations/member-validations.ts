@@ -5,5 +5,5 @@ export function hasSubscription (member: Member) {
 }
 
 export function isBanned(member: Member) {
-  return member.status !== MEMBER_STATUS.BANNED
+  return member.status === MEMBER_STATUS.BANNED
 }

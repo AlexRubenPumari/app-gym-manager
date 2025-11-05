@@ -6,6 +6,6 @@ describe("get-members-list", async () => {
   test("should return a array of members", async () => {
     const result = await getMembersList({ memberService })
 
-    expect(result).toHaveLength(3)
+    expect(result).toHaveLength(4)
   })
 })
