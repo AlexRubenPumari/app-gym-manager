@@ -15,3 +15,6 @@ node_modules
 
 #!.yarn/cache
 .pnp.*
+
+# The dist folder stores compiled build output and should be ignored
+dist

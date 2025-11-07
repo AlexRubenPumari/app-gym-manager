@@ -40,7 +40,7 @@
     "moduleDetection": "force",
     "skipLibCheck": true,
 
-     // 🧠 Añadí esto:
+     // Para usar el dominio como dependencia
     "baseUrl": ".",
     "paths": {
       "@gym-manager/domain": ["domain/src"]
