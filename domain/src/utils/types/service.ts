@@ -8,7 +8,7 @@ export interface QueryService<EntityType extends Entity> {
 }
 
 export interface StorageService<EntityType extends Entity> {
-  create: (newEntity: New<EntityType>) => Promise<EntityType>
-  update: (updateEntity: Updatable<EntityType>) => Promise<void>
+  create: (entity: New<EntityType>) => Promise<EntityType>
+  update: (entity: Updatable<EntityType>) => Promise<void>
   delete: (entity: Entity) => Promise<void>
 }
