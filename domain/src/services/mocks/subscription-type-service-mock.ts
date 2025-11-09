@@ -18,7 +18,7 @@ export const subscriptionTypeService: SubscriptionTypeService = {
     }
   },
   update: async (subscriptionType: { id: number, description?: string, price?: number }) => {
-    const index = subscriptionTypes.findIndex(({ id }) => id === subscriptionType.id);
+    const index = subscriptionTypes.findIndex(({ id }) => id === subscriptionType.id)
 
     if (subscriptionTypes[index]) {
       subscriptionTypes[index] = {
@@ -29,6 +29,8 @@ export const subscriptionTypeService: SubscriptionTypeService = {
     }
   },
   delete: async (subscriptionType: { id: number }) => {
-    return
+    const index = subscriptionTypes.findIndex(({ id }) => id === subscriptionType.id)
+
+    subscriptionTypes.splice(index, 1)
   }
 }
