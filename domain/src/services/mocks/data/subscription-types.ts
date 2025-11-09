@@ -1,3 +1,3 @@
-export const subscriptionTypes = [
-  { id: 1, description: "Plan comun", price: 200 }
+export let subscriptionTypes = [
+  { id: 1, description: "Common plan", price: 200 }
 ]

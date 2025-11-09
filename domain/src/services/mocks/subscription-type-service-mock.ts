@@ -17,8 +17,16 @@ export const subscriptionTypeService: SubscriptionTypeService = {
       id: 10
     }
   },
-  update: async (updateSubscriptionType: { id: number, description?: string, price?: number }) => {
-    return 
+  update: async (subscriptionType: { id: number, description?: string, price?: number }) => {
+    const index = subscriptionTypes.findIndex(({ id }) => id === subscriptionType.id);
+
+    if (subscriptionTypes[index]) {
+      subscriptionTypes[index] = {
+        id: subscriptionTypes[index].id,
+        price: subscriptionType.price ?? subscriptionTypes[index].price,
+        description: subscriptionType.description ?? subscriptionTypes[index].description
+      }
+    }
   },
   delete: async (subscriptionType: { id: number }) => {
     return
