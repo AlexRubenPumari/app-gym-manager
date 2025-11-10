@@ -18,3 +18,6 @@ node_modules
 
 # The dist folder stores compiled build output and should be ignored
 dist
+
+# Ignore environment variables file
+.env
