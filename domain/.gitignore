@@ -1,2 +1,12 @@
+# The dist folder stores compiled build output and should be ignored
 dist
+
+# Whether you use PnP or not, the node_modules folder is often used to store
+# build artifacts that should be gitignored
 node_modules
+
+# Ignore environment variables file
+.env
+
+# TypeScript incremental build info
+tsconfig.tsbuildinfo
