@@ -13,7 +13,7 @@ export function connectToDatabase(databaseEnv: DatabaseEnv = DATABASE_ENV.DEFAUL
 
   return sql.connect(config)
     .catch(error => {
-      console.log("Error connecting to database:", error)
+      console.log("Error connecting to sql server database:", error)
       throw error
     })
 }
