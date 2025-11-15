@@ -1,6 +1,6 @@
 import { describe, test, expect } from "vitest"
 import { registerMember } from "./register-member"
-import { memberService, dateService } from "../services/mocks"
+import { memberService, dateService } from "../../services/mocks"
 
 describe("register-member", () => {
   test("should register a member without a subscription", async () => {

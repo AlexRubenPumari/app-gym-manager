@@ -1,4 +1,4 @@
-import { MemberService, DateService } from "../services"
+import { MemberService, DateService } from "../../services"
 
 interface RegisterMemberDeps {
   memberService: MemberService
