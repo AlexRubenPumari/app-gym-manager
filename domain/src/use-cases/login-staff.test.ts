@@ -5,7 +5,10 @@ import { loginStaff } from "./login-staff"
 describe("login", () => {
   test("should return a staff when credentials are valid", async () => {
     const validCredentials = { email: "perez-gab@gmail.com", password: "123" }
-    const staff = {
+
+    const result = await loginStaff({ authService }, { staff: validCredentials })
+
+    expect(result).toStrictEqual({
       id: 1,
       firstName: 'Gabriel',
       lastName: 'Perez',
@@ -13,11 +16,7 @@ describe("login", () => {
       email: 'perez-gab@gmail.com',
       nationalId: '34433434',
       role: 'admin'
-    }
-
-    const result = await loginStaff({ authService }, { staff: validCredentials })
-
-    expect(result).toEqual(staff)
+    })
   })
 
   test("should return a error when credentials are invalid", async () => {
