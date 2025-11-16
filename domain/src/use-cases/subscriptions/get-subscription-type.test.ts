@@ -9,7 +9,7 @@ describe("get-subscription-type", () => {
     )
     expect(foundedSubscriptionType).toStrictEqual({
       id: 1,
-      description: "Plan comun",
+      description: "Common plan",
       price: 200
     })
   })

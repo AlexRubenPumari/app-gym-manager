@@ -17,5 +17,5 @@ export async function updateSubscriptionType(
     return new Error("Subscription type not found")
   }
 
-  await subscriptionTypeService.update(subscriptionType)
+  return await subscriptionTypeService.update(subscriptionType)
 }

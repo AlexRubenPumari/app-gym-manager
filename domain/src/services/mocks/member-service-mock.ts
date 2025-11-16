@@ -27,7 +27,7 @@ async function createMember(member: {
 
   if (!memberSubscription) return result
 
-  return { ...result, subscription: memberSubscription }
+  return result
 }
 
 export const memberService: MemberService = {
@@ -55,7 +55,20 @@ export const memberService: MemberService = {
       status: "active" as const
     }
   },
-  update: async (updateMember) => {
+  update: async (member) => {
+    const index = members.findIndex(({ id }) => id === member.id)
+    let foundedMember = members[index]
+    if (foundedMember) {
+      foundedMember = {
+        id: foundedMember.id,
+        nationalId: member.nationalId ?? foundedMember.nationalId,
+        firstName: member.firstName ?? foundedMember.firstName,
+        lastName: member.lastName ?? foundedMember.lastName,
+        phone: member.phone ?? foundedMember.phone,
+        registrationAt: member.registrationAt ?? foundedMember.registrationAt,
+        status: member.status ?? foundedMember.status,
+      }
+    }
   },
   delete: async (member) => {
   },

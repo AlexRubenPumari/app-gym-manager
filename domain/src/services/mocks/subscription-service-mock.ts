@@ -1,7 +1,7 @@
-import { Subscription } from "domain/src/entities"
+import { Subscription } from "../../entities"
 import { subscriptions } from "./data/subscriptions"
 import { subscriptionTypes } from "./data/subscription-types"
-import { New, Date as DateObject } from "domain/src/utils"
+import { New, Date as DateObject } from "../../utils"
 import { SubscriptionService } from "../subscription-service"
 
 import { parseDateToDateObject, isBeforeDateObject, isEqualDateObject } from "./logic"
@@ -13,7 +13,7 @@ function isActiveSubscription(subscription: { endAt: DateObject }) {
 
 function createSubscriptionViewModel(
   subscription: {
-    id: number; startAt: DateObject; endAt: DateObject; memberId: number;subscriptionTypeId: number;
+    id: number; startAt: DateObject; endAt: DateObject; memberId: number; subscriptionTypeId: number;
   }
 ): Subscription {
   const subscriptionStatus = isActiveSubscription(subscription)
@@ -42,6 +42,16 @@ export const subscriptionService: SubscriptionService = {
     if (!foundedSubscription) return null
 
     return createSubscriptionViewModel(foundedSubscription)
+  },
+  getActiveByMember: async (member) => {
+    const memberSubscriptions = subscriptions.filter(({ id }) => id === member.id)
+    const activeSubscription = memberSubscriptions.find(subscription => {
+      return isActiveSubscription(subscription)
+    })
+
+    if (!activeSubscription) return null
+
+    return createSubscriptionViewModel(activeSubscription)
   },
   create: async (newSubscription: New<Subscription>) => {
     return {
