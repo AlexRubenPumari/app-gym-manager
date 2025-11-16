@@ -10,6 +10,10 @@ export function parseDateToDateObject(date: Date) {
   return dateObject
 }
 
+export function parseDateObjectToDate(dateObj: DateObject): Date {
+  return new Date(Date.UTC(dateObj.year, dateObj.month - 1, dateObj.day))
+}
+
 export function isEqualDateObject(firstDate: DateObject, secondDate: DateObject) {
   return firstDate.day === secondDate.day && firstDate.month === secondDate.month && firstDate.year === secondDate.year
 }

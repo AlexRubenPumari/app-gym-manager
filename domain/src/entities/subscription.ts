@@ -8,10 +8,10 @@ export const SUBSCRIPTION_STATUS = {
 export type SubscriptionStatus = typeof SUBSCRIPTION_STATUS[keyof typeof SUBSCRIPTION_STATUS]
 
 export interface Subscription extends Entity {
-  memberId: number
-  subscriptionType: string
   startAt: Date
   endAt: Date
   status: SubscriptionStatus
   price: number
+  subscriptionType: string
+  memberId: number
 }

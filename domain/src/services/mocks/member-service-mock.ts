@@ -3,7 +3,7 @@ import { New } from "domain/src/utils"
 import { members } from "./data/members"
 import { MemberService } from "../member-service"
 import { subscriptionService } from "./subscription-service-mock"
-import { parseDateToDateObject } from "./logic"
+import { parseDateToDateObject, parseDateObjectToDate } from "./logic"
 
 function getSubscriptionByMember(member: { id: number }) {
   return subscriptionService.getById(member)
@@ -58,16 +58,19 @@ export const memberService: MemberService = {
   update: async (member) => {
     const index = members.findIndex(({ id }) => id === member.id)
     let foundedMember = members[index]
-    if (foundedMember) {
-      foundedMember = {
-        id: foundedMember.id,
-        nationalId: member.nationalId ?? foundedMember.nationalId,
-        firstName: member.firstName ?? foundedMember.firstName,
-        lastName: member.lastName ?? foundedMember.lastName,
-        phone: member.phone ?? foundedMember.phone,
-        registrationAt: member.registrationAt ?? foundedMember.registrationAt,
-        status: member.status ?? foundedMember.status,
+    
+    if (!!foundedMember) {
+      const registrationAt: Date = member.registrationAt
+        ? parseDateObjectToDate(member.registrationAt)
+        : foundedMember.registrationAt
+
+      const updatedMember = {
+        ...foundedMember,
+        ...member,
+        registrationAt
       }
+
+      foundedMember = updatedMember
     }
   },
   delete: async (member) => {

@@ -1,4 +1,14 @@
-export const members = [
+interface MockMember {
+  id: number;
+  nationalId: string;
+  firstName: string;
+  lastName: string;
+  phone?: string;
+  status: string;
+  registrationAt: Date;
+}
+
+export const members: MockMember[] = [
   {
     id: 1,
     nationalId: "12345678A",
