@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "unit-test": "vitest --run --config vitest.unit.config.js",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
