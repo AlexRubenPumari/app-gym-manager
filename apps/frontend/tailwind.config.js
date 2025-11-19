@@ -6,7 +6,11 @@ export default {
     "./src/components/**/*.{js,jsx,ts,tsx}"
   ],
   theme: {
-    extend: {},
+    extend: {
+      outlineWidth: {
+        3: "3px",
+      }
+    },
   },
   plugins: [],
 }
