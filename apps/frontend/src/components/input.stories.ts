@@ -2,7 +2,7 @@ import { Meta, StoryObj } from "@storybook/react-vite"
 import { Input } from "./input.js"
 
 const meta = {
-  title: "components/Input",
+  title: "Components/Input",
   component: Input,
   parameters: {
     layout: "centered",
@@ -31,7 +31,8 @@ export const Text: Story = {
 export const Password: Story = {
   args: {
     type: "password",
-    placeholder: "Enter your password"
+    placeholder: "Enter your password",
+    value: "my-password",
   }
 }
 

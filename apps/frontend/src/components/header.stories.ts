@@ -3,7 +3,7 @@ import { fn } from "storybook/test"
 import { Header } from "./header.js"
 
 const meta = {
-  title: "components/Header",
+  title: "Components/Header",
   component: Header,
   parameters: {
     layout: "fullscreen"
