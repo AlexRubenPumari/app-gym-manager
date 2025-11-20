@@ -3,6 +3,7 @@ import { joinClasses } from "../logic"
 
 interface InputProps {
   placeholder: string
+  className?: string
   type?: "password" | "text"
   error?: string
   value?: string
@@ -11,11 +12,23 @@ interface InputProps {
 }
 
 export function Input(
-  { type = "text", value = "", placeholder, error, autoFocus, label }: InputProps
+  {
+    type = "text",
+    value = "",
+    placeholder,
+    error,
+    autoFocus,
+    label,
+    className
+  }: InputProps
 ) {
   const inputId = useId()
+  const wrapperClassName = joinClasses(
+    className,
+    "relative",
+  )
   const inputClassName = joinClasses(
-    "rounded-lg px-4 py-2 focus:outline focus:outline-3 focus:outline-neutral-900",
+    "rounded-lg px-4 py-2 outline outline-1 outline-neutral-200 shadow-inner focus:outline-3 focus:outline-neutral-900",
     error && "outline outline-3 outline-red-600 focus:!outline-red-600"
   )
   const errorClassName = joinClasses(
@@ -26,7 +39,7 @@ export function Input(
   )
 
   return (
-    <div className="relative">
+    <div className={wrapperClassName}>
       {label && <label htmlFor={inputId} className={labelClassName}>{label}</label>}
       <input
         id={inputId}
