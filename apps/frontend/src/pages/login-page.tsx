@@ -16,7 +16,7 @@ export function LoginPage() {
           placeholder=""
           label="Password:"
         />
-        <Button variant="primary" className="block mx-auto">Sign in</Button>
+        <Button variant="primary" className="block mx-auto">Log in</Button>
       </form>
     </div>
   )
