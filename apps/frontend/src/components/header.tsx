@@ -11,8 +11,8 @@ interface HeaderProps {
 }
 
 export function Header({ user, onLogin, onCreateAccount, onLogout }: HeaderProps) {
-  const headerClassName = "flex items-center gap-4 rounded-b-2xl shadow-md p-8"
-  const titleClassName = "font-bold mr-auto text-xl"
+  const headerClassName = "flex items-center gap-4 rounded-b-2xl shadow-md p-8 bg-white"
+  const titleClassName = "font-bold mr-auto text-2xl"
 
   return (
     <header className={headerClassName}>
