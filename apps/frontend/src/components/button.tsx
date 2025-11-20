@@ -6,10 +6,14 @@ interface ButtonProps {
   children: ReactNode
   disabled?: boolean
   onClick?: () => void
+  className?: string
 }
 
-export function Button ({ variant, disabled = false, children, onClick }: ButtonProps) {
-  const className = joinClasses(
+export function Button (
+  { variant, disabled = false, children, onClick, className }: ButtonProps
+) {
+  const buttonClassName = joinClasses(
+    className,
     "px-4 py-2 rounded-md font-bold select-none",
     variant === "primary" && "bg-neutral-900 text-white",
     variant === "secondary" && "outline -outline-offset-2 outline-2 outline-neutral-900 text-neutral-900",
@@ -19,7 +23,7 @@ export function Button ({ variant, disabled = false, children, onClick }: Button
 
   return (
     <button
-      className={className}
+      className={buttonClassName}
       onClick={onClick}
       disabled={disabled}
     >
