@@ -12,7 +12,7 @@ export function Table({ columns, data }: TableProps) {
   return (
     <div>
       <table className="w-full">
-        <thead className="bg-neutral-100">
+        <thead className="border-b-2 border-neutral-900">
           <tr className="uppercase">
             {
               columns.map(column => (
@@ -28,7 +28,7 @@ export function Table({ columns, data }: TableProps) {
             <tbody className="divide-y divide-neutral-200">
               {
                 data.map((row, rowIndex) => (
-                  <tr key={rowIndex}>
+                  <tr key={rowIndex} className="hover:bg-neutral-100 transition-colors">
                     {columns.map(({ key }) => (
                       <td className="px-4 py-1 text-left" key={key}>{row[key]}</td>
                     ))}
