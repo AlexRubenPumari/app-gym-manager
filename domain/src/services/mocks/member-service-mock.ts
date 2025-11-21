@@ -1,12 +1,19 @@
-import { Member, MemberStatus } from "domain/src/entities"
+import { Member, MemberStatus, Subscription } from "domain/src/entities"
 import { New } from "domain/src/utils"
 import { members } from "./data/members"
 import { MemberService } from "../member-service"
-import { subscriptionService } from "./subscription-service-mock"
+import { isActiveSubscription, subscriptionService } from "./subscription-service-mock"
 import { parseDateToDateObject, parseDateObjectToDate } from "./logic"
+import { subscriptions } from "./data/subscriptions"
 
-function getSubscriptionByMember(member: { id: number }) {
-  return subscriptionService.getById(member)
+async function getActiveSubscriptionByMember(member: { id: number }): Promise<Subscription | undefined> {
+  const result = subscriptions
+    .filter(subcription => subcription.memberId === member.id)
+    .find(subcription => isActiveSubscription(subcription))
+
+  if(!result) return
+
+  return await subscriptionService.getById({ id: result.id }) as Subscription
 }
 
 async function createMember(member: {
@@ -21,12 +28,12 @@ async function createMember(member: {
   const registrationDate = parseDateToDateObject(member.registrationAt)
   const status = member.status as MemberStatus
 
-  const memberSubscription = await getSubscriptionByMember(member)
+  const memberSubscription = await getActiveSubscriptionByMember(member)
 
-  let result = { ...member, status: status, registrationAt: registrationDate }
+  let result: Member = { ...member, status: status, registrationAt: registrationDate }
 
-  if (!memberSubscription) return result
-
+  if (memberSubscription) return { ...result, subscription: memberSubscription}
+  
   return result
 }
 
