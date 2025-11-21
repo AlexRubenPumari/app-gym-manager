@@ -3,11 +3,13 @@
   "packageManager": "yarn@4.10.3",
   "dependencies": {
     "@gym-manager/domain": "*",
+    "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "mssql": "^12.1.0"
   },
   "devDependencies": {
+    "@types/cors": "^2",
     "@types/express": "^5",
     "@types/mssql": "^9.1.8",
     "typescript": "^5.9.3",
