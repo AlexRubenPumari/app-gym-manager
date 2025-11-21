@@ -6,7 +6,7 @@ import { SubscriptionService } from "../subscription-service"
 
 import { parseDateToDateObject, isBeforeDateObject, isEqualDateObject } from "./logic"
 
-function isActiveSubscription(subscription: { endAt: DateObject }) {
+export function isActiveSubscription(subscription: { endAt: DateObject }) {
   const todayDate = parseDateToDateObject(new Date())
   return isEqualDateObject(todayDate, subscription.endAt) || isBeforeDateObject(todayDate, subscription.endAt)
 }
@@ -19,11 +19,12 @@ function createSubscriptionViewModel(
   const subscriptionStatus = isActiveSubscription(subscription)
     ? 'active'
     : 'expired'
+  const { subscriptionTypeId, ...result } = subscription
 
   return {
-    ...subscription,
-    price: getSubscriptionPrice(subscription.subscriptionTypeId),
-    subscriptionType: getSubscriptionDescription(subscription.subscriptionTypeId),
+    ...result,
+    price: getSubscriptionPrice(subscriptionTypeId),
+    type: getSubscriptionDescription(subscriptionTypeId),
     status: subscriptionStatus
   }
 }

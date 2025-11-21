@@ -1,17 +1,15 @@
-import { Date, Entity } from "../utils"
+import { DateRange, Entity } from "../utils"
 
 export const SUBSCRIPTION_STATUS = {
-  ACTIVE: 'active',
-  EXPIRED: 'expired',
+  ACTIVE: "active",
+  EXPIRED: "expired",
 } as const
 
 export type SubscriptionStatus = typeof SUBSCRIPTION_STATUS[keyof typeof SUBSCRIPTION_STATUS]
 
-export interface Subscription extends Entity {
-  startAt: Date
-  endAt: Date
+export interface Subscription extends Entity, DateRange {
   status: SubscriptionStatus
   price: number
-  subscriptionType: string
+  type: string
   memberId: number
 }
