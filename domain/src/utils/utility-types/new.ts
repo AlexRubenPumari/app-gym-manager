@@ -1,3 +1,3 @@
-type GeneratedFields = 'id' | 'status'
+import { Entity } from "../types"
 
-export type New<Type extends Object> = Omit<Type, GeneratedFields>
+export type New<Type extends Entity> = Omit<Type, "id">
