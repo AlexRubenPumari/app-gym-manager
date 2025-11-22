@@ -12,10 +12,19 @@ describe("start-member-subscription", () => {
     expect(result).toBeInstanceOf(Error)
   })
 
-  test("should return an error if member does not exist", async () => {
+  test("should return an error if the member does not exist", async () => {
     const result = await startMemberSubscription(
       { memberService, subscriptionService, subscriptionTypeService, paymentService },
       { member: { id: 99 }, payment: { method: "cash" }, subscriptionType: { id: 1 } }
+    )
+
+    expect(result).toBeInstanceOf(Error)
+  })
+
+  test("should return an error if the member is banned", async () => {
+    const result = await startMemberSubscription(
+      { memberService, subscriptionService, subscriptionTypeService, paymentService },
+      { member: { id: 4 }, payment: { method: "cash" }, subscriptionType: { id: 1 } }
     )
 
     expect(result).toBeInstanceOf(Error)
@@ -40,19 +49,20 @@ describe("start-member-subscription", () => {
       const { payment, subscription } = result
       
       expect(subscription.id).toBeTypeOf("number")
-      expect(subscription.subscriptionType).toBeTypeOf("string")
-      expect(subscription.price).toBeTypeOf("number")
-      expect(subscription.startAt).toEqual(dateService.now())
-      expect(subscription.endAt).toBeInstanceOf(dateService.now().addDays(30))
+      expect(subscription.type).toBeTypeOf("string")
+      expect(subscription.startAt).toStrictEqual(dateService.now())
+      expect(subscription.endAt).toStrictEqual(dateService.now().addDays(30))
       expect(subscription).toMatchObject({
+        type: "Common plan",
         status: "active",
-        memberId: 1
+        memberId: 1,
+        price: 200
       })
 
       expect(payment.id).toBeTypeOf("number")
-      expect(payment.subscriptionId).toBeTypeOf("number")
-      expect(payment.paidAt).toBeInstanceOf(dateService.now())
+      expect(payment.paidAt).toStrictEqual(dateService.now())
       expect(payment).toMatchObject({
+        subscriptionId: subscription.id,
         memberId: 1,
         amount: subscription.price,
         method: "cash"

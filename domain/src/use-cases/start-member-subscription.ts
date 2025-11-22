@@ -1,4 +1,4 @@
-import { MEMBER_STATUS, PaymentMethod } from "../entities"
+import { MEMBER_STATUS, SUBSCRIPTION_STATUS,PaymentMethod } from "../entities"
 import { LocalDate } from "../utils"
 import { MemberService, SubscriptionService, PaymentService, SubscriptionTypeService } from "../services"
 
@@ -24,9 +24,13 @@ export async function startMemberSubscription (
     return new Error("Member not found")
   }
 
-  const hasActiveSubscription = foundedMember.status === MEMBER_STATUS.ACTIVE
-  if (hasActiveSubscription) {
+  if (foundedMember.subscription) {
     return new Error("Member already has an active subscription")
+  }
+
+  const memberIsBanned = foundedMember.status === MEMBER_STATUS.BANNED
+  if (memberIsBanned) {
+    return new Error("Member is banned")
   }
 
   const foundedSubscriptionType = await subscriptionTypeService.getById(subscriptionType)
@@ -38,10 +42,11 @@ export async function startMemberSubscription (
   const today = new LocalDate()
   const memberSubscription = {
     memberId: foundedMember.id,
-    subscriptionType: foundedSubscriptionType.description,
+    type: foundedSubscriptionType.description,
     startAt: today,
     endAt: today.addDays(SUBSCRIPTION_DAYS),
-    price: foundedSubscriptionType.price
+    price: foundedSubscriptionType.price,
+    status: SUBSCRIPTION_STATUS.ACTIVE
   }
   const createdSubscription = await subscriptionService.create(memberSubscription)
 
