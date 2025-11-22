@@ -1,11 +1,11 @@
-interface Column {
+interface TableColumn {
   label: string
   key: string
 }
-type Data = Record<string, string | number>
+export type TableData = Record<string, string | number>
 interface TableProps {
-  columns: Column[],
-  data?: Data[],
+  columns: TableColumn[],
+  data?: TableData[],
 }
 export function Table({ columns, data }: TableProps) {
   const tableHeadClassName = "px-4 py-1 text-left font-medium"
