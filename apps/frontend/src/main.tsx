@@ -2,6 +2,7 @@ import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import { RootPage, ErrorPage, MembersListPage, LoginPage } from "./pages"
+import { membersListLoader } from "./pages/loaders"
 import "./index.css"
 
 const router = createBrowserRouter([
@@ -13,6 +14,7 @@ const router = createBrowserRouter([
       {
         path: "members",
         element: <MembersListPage />,
+        loader: membersListLoader,
       },
     ],
   },
