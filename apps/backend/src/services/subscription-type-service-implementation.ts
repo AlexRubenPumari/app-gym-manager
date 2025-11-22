@@ -1,11 +1,11 @@
-import sql from "mssql"
+import { ConnectionPool } from "mssql"
 import { SubscriptionTypeService } from "@gym-manager/domain"
 import { buildSqlSetClause } from "../utils"
 
 export class SubscriptionTypeSqlService implements SubscriptionTypeService {
-  private db: sql.ConnectionPool
+  private db: ConnectionPool
 
-  constructor(db: sql.ConnectionPool) {
+  constructor(db: ConnectionPool) {
     this.db = db
   }
 
