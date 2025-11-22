@@ -1,6 +1,6 @@
 import express from "express"
-import { getSubscriptionTypesList, getSubscriptionType, createSubscriptionType, deleteSubscriptionType, updateSubscriptionType } from "@gym-manager/domain"
 import { ConnectionPool } from "mssql"
+import { getSubscriptionTypesList, getSubscriptionType, createSubscriptionType, deleteSubscriptionType, updateSubscriptionType } from "@gym-manager/domain"
 import { SubscriptionTypeSqlService } from "../services"
 
 export function createSubscriptionTypesRouter(db: ConnectionPool) {
