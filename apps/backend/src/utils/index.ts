@@ -1,1 +1,1 @@
-export * from "./build-sql-set-clause"
+export * from "./filter-object"
