@@ -7,7 +7,10 @@ describe("subscription-type-service-implementation", async () => {
   const subscriptionTypes = new SubscriptionTypeSqlService(db)
 
   beforeEach(async () => {
-    await db.query("TRUNCATE TABLE SubscriptionType")
+    await db.query(`
+      DELETE FROM SubscriptionType;
+      DBCC CHECKIDENT ('SubscriptionType', RESEED, 0);
+    `)
   })
 
   test("create: should create a new subscription type", async () => {
@@ -41,7 +44,7 @@ describe("subscription-type-service-implementation", async () => {
     )
   })
 
-  test("get-by-id: should return an error when pass a non-existent id", async () => {
+  test("get-by-id: should return null when pass a non-existent id", async () => {
     const result = await subscriptionTypes.getById({ id: 1 })
 
     expect(result).toEqual(null)

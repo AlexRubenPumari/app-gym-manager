@@ -1,6 +1,7 @@
-import { ConnectionPool } from "mssql"
-import { SubscriptionTypeService } from "@gym-manager/domain"
-import { buildSqlSetClause } from "../utils"
+import { SubscriptionTypeService, SubscriptionType } from "@gym-manager/domain"
+import { New, Updatable } from "@gym-manager/domain"
+import { ConnectionPool, Int, VarChar, Decimal } from "mssql"
+import { filterObject, buildUpdateSetClause } from "../utils"
 
 export class SubscriptionTypeSqlService implements SubscriptionTypeService {
   private db: ConnectionPool
@@ -19,13 +20,16 @@ export class SubscriptionTypeSqlService implements SubscriptionTypeService {
         id: Id,
         price: Price,
         description: Description,
-      }
+      } satisfies SubscriptionType as SubscriptionType
     ))
   }
   async getById({ id }: { id: number }) {
-    const result = await this.db.query(
-      `SELECT Id, Price, Description FROM SubscriptionType WHERE Id = ${id}`
-    )
+    const result = await this.db.request()
+      .input("Id", Int, id)
+      .query(`
+        SELECT Id, Price, Description FROM SubscriptionType WHERE Id = @Id
+      `)
+
     const record = result.recordset[0]
     if (!record) return null
 
@@ -33,14 +37,17 @@ export class SubscriptionTypeSqlService implements SubscriptionTypeService {
       id: record.Id,
       price: record.Price,
       description: record.Description,
-    }
+    } satisfies SubscriptionType as SubscriptionType
   }
-  async create({ price, description }: { price: number, description: string }) {
-    const result = await this.db.query(
-      `INSERT INTO SubscriptionType (Price, Description)
+  async create({ price, description }: New<SubscriptionType>) {
+    const result = await this.db.request()
+      .input("Price", Decimal(10, 2), price)
+      .input("Description", VarChar(100), description)
+      .query(`
+        INSERT INTO SubscriptionType (Price, Description)
         OUTPUT INSERTED.Id
-        VALUES (${price}, '${description}')`
-    )
+        VALUES (@Price, @Description)
+      `)
 
     const insertedId = result.recordset[0].Id
 
@@ -48,22 +55,24 @@ export class SubscriptionTypeSqlService implements SubscriptionTypeService {
       id: insertedId,
       price,
       description,
-    }
+    } satisfies SubscriptionType as SubscriptionType
   }
-  async update(subscriptionType: { id: number, price?: number, description?: string }) {
-    const { id, ...data } = subscriptionType
+  async update(subscriptionType: Updatable<SubscriptionType>) {
+    const sqlParameters = {
+      Price: { type: Decimal(10, 2), value: subscriptionType.price },
+      Description: { type: VarChar(100), value: subscriptionType.description }
+    }
+    const filteredSqlParameters = filterObject(sqlParameters, property => !!property.value)
 
-    const filteredData = Object.fromEntries(
-      Object.entries({ Price: data.price, Description: data.description })
-        .filter(([_, value]) => value)
-    )
-    const setStatement = buildSqlSetClause(filteredData)
+    const request = this.db.request()
+    request.input("Id", Int, subscriptionType.id)
+    const updateSetClause = buildUpdateSetClause(request, filteredSqlParameters)
 
-    await this.db.query(
-      `UPDATE SubscriptionType SET ${setStatement} WHERE Id = ${id}`
-    )
+    await request.query(`UPDATE SubscriptionType SET ${updateSetClause} WHERE Id = @Id`)
   }
   async delete({ id }: { id: number }) {
-    await this.db.query(`DELETE FROM SubscriptionType WHERE Id = ${id}`)
+    await this.db.request()
+      .input("Id", Int, id)
+      .query("DELETE FROM SubscriptionType WHERE Id = @Id")
   }
 }
