@@ -1,3 +1,4 @@
+import { Member, New } from "@gym-manager/domain"
 import { describe, expect, test, beforeEach } from "vitest"
 import { MemberSqlService } from "."
 import { connectToDatabase } from "../db"
@@ -5,13 +6,15 @@ import { connectToDatabase } from "../db"
 describe("member-service-implementation", async () => {
   const db = await connectToDatabase("test")
   const members = new MemberSqlService(db)
-  const defaultMember = {
+
+  const buildMember = (overrides: Partial<Member> = {}): New<Member> => ({
     firstName: "Carlos",
     lastName: "Ramírez",
     nationalId: "12345678-9",
     status: "active" as const,
     registrationAt: { year: 2025, month: 2, day: 15 },
-  }
+    ...overrides,
+  })
 
   beforeEach(async () => {
     await db.query(`
@@ -60,7 +63,7 @@ describe("member-service-implementation", async () => {
   // })
 
   test("get-all: should return a array of members", async () => {
-    await members.create(defaultMember)
+    await members.create(buildMember())
     const allMembers = await members.getAll()
     expect(allMembers).toHaveLength(1)
   })
