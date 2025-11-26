@@ -1,0 +1,11 @@
+name: gym-manager
+
+services:
+  database:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sql-server-db
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=${SQL_SA_PASSWORD}
+    ports:
+      - "1433:1433"
