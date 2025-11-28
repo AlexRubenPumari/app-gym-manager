@@ -1,8 +1,12 @@
 {
-  "name": "backend",
+  "name": "@gym-manager/backend",
   "packageManager": "yarn@4.10.3",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
   "dependencies": {
-    "@gym-manager/domain": "*",
+    "@gym-manager/domain": "workspace:*",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",

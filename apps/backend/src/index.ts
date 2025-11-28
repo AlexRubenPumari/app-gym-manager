@@ -1,24 +1,25 @@
 import express from "express"
 import cors from "cors"
 import { createSubscriptionTypesRouter, createMembersRouter } from "./routes"
-import { connectToDatabase } from "./db"
+import { connectDatabase } from "./db"
 
 async function startServer({ port }: { port: number }) {
   try {
-    const db = await connectToDatabase()
+    const db = await connectDatabase()
+    
     const app = express()
 
     app.use(cors()) //Danger: Change in production
     app.use(express.json())
-    app.use('/api/v1/subscription-types', createSubscriptionTypesRouter(db))
-    app.use('/api/v1/members', createMembersRouter(db)) //-->Terminar
-    // app.use('/api/v1/staff', createStaffRouter(db))
-    // app.use('/api/v1/subscriptions', createSubscriptionsRouter(db))
+    app.use("/api/v1/subscription-types", createSubscriptionTypesRouter(db))
+    app.use("/api/v1/members", createMembersRouter(db)) //-->Terminar
+    // app.use("/api/v1/staff", createStaffRouter(db))
+    // app.use("/api/v1/subscriptions", createSubscriptionsRouter(db))
 
     app.listen(port, () => {
       console.log(`Server listening on http://localhost:${port}`)
     })
-  } catch(error) {
+  } catch (error) {
     console.log("Error connecting to database", error)
   }
 }

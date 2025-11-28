@@ -2,10 +2,25 @@ name: gym-manager
 
 services:
   database:
-    image: mcr.microsoft.com/mssql/server:2019-latest
+    image: mcr.microsoft.com/mssql/server:2019-CU27-ubuntu-20.04
     container_name: sql-server-db
     environment:
       - ACCEPT_EULA=Y
-      - MSSQL_SA_PASSWORD=${SQL_SA_PASSWORD}
+      - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
+    healthcheck:
+      start_period: 5s
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P \"$${MSSQL_SA_PASSWORD}\" -Q \"SELECT 1\""]
+      interval: 15s
+      timeout: 5s
+      retries: 8
+  backend:
+    build:
+      dockerfile: ./apps/backend/dockerfile.backend
+      context: .
+    image: backend:latest
+    env_file: .env
     ports:
-      - "1433:1433"
+      - "8080:3000"
+    depends_on:
+      database:
+        condition: service_healthy

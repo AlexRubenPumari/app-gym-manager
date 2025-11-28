@@ -1,4 +1,4 @@
-import sql from "mssql"
+import * as sql from "mssql"
 import { sqlConfig, sqlTestConfig } from "./config"
 
 const DATABASE_ENV = {
@@ -8,7 +8,7 @@ const DATABASE_ENV = {
 
 type DatabaseEnv = typeof DATABASE_ENV[keyof typeof DATABASE_ENV]
 
-export function connectToDatabase(databaseEnv: DatabaseEnv = DATABASE_ENV.DEFAULT) {
+export function connectDatabase(databaseEnv: DatabaseEnv = DATABASE_ENV.DEFAULT) {
   const config = databaseEnv === DATABASE_ENV.TEST ? sqlTestConfig : sqlConfig
 
   return sql.connect(config)

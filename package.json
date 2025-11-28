@@ -6,7 +6,14 @@
     "domain",
     "apps/*"
   ],
+  "scripts": {
+    "build:database": "node apps/backend/scripts/index.ts",
+    "build:domain": "yarn workspace @gym-manager/domain build",
+    "build:backend": "yarn run build:domain && yarn workspace @gym-manager/backend build",
+    "start:backend": "yarn workspace @gym-manager/backend start"
+  },
   "devDependencies": {
+    "@types/node": "^24.10.1",
     "typescript": "^5.9.3"
   }
 }
