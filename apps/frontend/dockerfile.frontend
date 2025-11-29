@@ -1,0 +1,23 @@
+FROM node:20-alpine
+
+WORKDIR /root
+
+COPY package.json yarn.lock tsconfig.json ./
+COPY ./apps/frontend ./apps/frontend
+COPY ./domain ./domain
+COPY .yarn ./
+COPY .yarnrc.yml ./
+
+# ------------------------------------------------------------------
+# Enable corepack and set up yarn 4 to handle backend/package.json
+# ------------------------------------------------------------------
+RUN corepack enable && corepack prepare yarn@4.10.3 --activate
+
+RUN yarn install
+
+RUN yarn build:frontend
+
+EXPOSE 5173
+
+CMD ["yarn", "start:frontend"]
+

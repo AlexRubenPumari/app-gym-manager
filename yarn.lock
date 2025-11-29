@@ -720,6 +720,43 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@gym-manager/frontend@workspace:apps/frontend":
+  version: 0.0.0-use.local
+  resolution: "@gym-manager/frontend@workspace:apps/frontend"
+  dependencies:
+    "@chromatic-com/storybook": "npm:4.1.2"
+    "@eslint/js": "npm:^9.39.1"
+    "@storybook/addon-a11y": "npm:10.0.7"
+    "@storybook/addon-docs": "npm:10.0.7"
+    "@storybook/addon-onboarding": "npm:10.0.7"
+    "@storybook/addon-vitest": "npm:10.0.7"
+    "@storybook/react-vite": "npm:10.0.7"
+    "@types/node": "npm:^24.10.0"
+    "@types/react": "npm:^19.2.2"
+    "@types/react-dom": "npm:^19.2.2"
+    "@vitejs/plugin-react-swc": "npm:^4.2.1"
+    "@vitest/browser-playwright": "npm:^4.0.9"
+    "@vitest/coverage-v8": "npm:^4.0.9"
+    autoprefixer: "npm:^10.4.22"
+    eslint: "npm:^9.39.1"
+    eslint-plugin-react-hooks: "npm:^7.0.1"
+    eslint-plugin-react-refresh: "npm:^0.4.24"
+    eslint-plugin-storybook: "npm:10.0.7"
+    globals: "npm:^16.5.0"
+    playwright: "npm:^1.56.1"
+    postcss: "npm:^8.5.6"
+    react: "npm:^19.2.0"
+    react-dom: "npm:^19.2.0"
+    react-router-dom: "npm:6.30.2"
+    storybook: "npm:10.0.7"
+    tailwindcss: "npm:3"
+    typescript: "npm:~5.9.3"
+    typescript-eslint: "npm:^8.46.3"
+    vite: "npm:^7.2.2"
+    vitest: "npm:^4.0.9"
+  languageName: unknown
+  linkType: soft
+
 "@humanfs/core@npm:^0.19.1":
   version: 0.19.1
   resolution: "@humanfs/core@npm:0.19.1"
@@ -3425,43 +3462,6 @@ __metadata:
   checksum: 10c0/0557548194cb9a809a435bf92bcfbc20c89e8b5eb38861b73ced36750437251e39a111fc3a18b98531be9dd91fe1411e4969f229dc579ec0251ce6c5d4900bbc
   languageName: node
   linkType: hard
-
-"frontend@workspace:apps/frontend":
-  version: 0.0.0-use.local
-  resolution: "frontend@workspace:apps/frontend"
-  dependencies:
-    "@chromatic-com/storybook": "npm:4.1.2"
-    "@eslint/js": "npm:^9.39.1"
-    "@storybook/addon-a11y": "npm:10.0.7"
-    "@storybook/addon-docs": "npm:10.0.7"
-    "@storybook/addon-onboarding": "npm:10.0.7"
-    "@storybook/addon-vitest": "npm:10.0.7"
-    "@storybook/react-vite": "npm:10.0.7"
-    "@types/node": "npm:^24.10.0"
-    "@types/react": "npm:^19.2.2"
-    "@types/react-dom": "npm:^19.2.2"
-    "@vitejs/plugin-react-swc": "npm:^4.2.1"
-    "@vitest/browser-playwright": "npm:^4.0.9"
-    "@vitest/coverage-v8": "npm:^4.0.9"
-    autoprefixer: "npm:^10.4.22"
-    eslint: "npm:^9.39.1"
-    eslint-plugin-react-hooks: "npm:^7.0.1"
-    eslint-plugin-react-refresh: "npm:^0.4.24"
-    eslint-plugin-storybook: "npm:10.0.7"
-    globals: "npm:^16.5.0"
-    playwright: "npm:^1.56.1"
-    postcss: "npm:^8.5.6"
-    react: "npm:^19.2.0"
-    react-dom: "npm:^19.2.0"
-    react-router-dom: "npm:6.30.2"
-    storybook: "npm:10.0.7"
-    tailwindcss: "npm:3"
-    typescript: "npm:~5.9.3"
-    typescript-eslint: "npm:^8.46.3"
-    vite: "npm:^7.2.2"
-    vitest: "npm:^4.0.9"
-  languageName: unknown
-  linkType: soft
 
 "fs-minipass@npm:^3.0.0":
   version: 3.0.3

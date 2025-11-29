@@ -24,3 +24,10 @@ services:
     depends_on:
       database:
         condition: service_healthy
+  frontend:
+    build:
+      dockerfile: ./apps/frontend/dockerfile.frontend
+      context: .
+    image: frontend:latest
+    ports:
+      - "8081:5137"

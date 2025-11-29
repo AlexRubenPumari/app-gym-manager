@@ -10,7 +10,9 @@
     "build:database": "node apps/backend/scripts/index.ts",
     "build:domain": "yarn workspace @gym-manager/domain build",
     "build:backend": "yarn run build:domain && yarn workspace @gym-manager/backend build",
-    "start:backend": "yarn workspace @gym-manager/backend start"
+    "build:frontend": "yarn run build:domain && yarn workspace @gym-manager/frontend build",
+    "start:backend": "yarn workspace @gym-manager/backend start",
+    "start:frontend": "yarn workspace @gym-manager/frontend start"
   },
   "devDependencies": {
     "@types/node": "^24.10.1",
